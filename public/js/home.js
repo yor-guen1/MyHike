@@ -1,10 +1,12 @@
+import { request } from "express";
+
 let cardButtons = document.querySelectorAll('#liste-card button');
 
 // Fonction qui permet a l'utilisateur de s'inscrir a un hike
 const inscrireServeur = async (event) => {
     event.preventDefault();
     let data = {
-        id: event.currentTarget.id
+        id: event.currentTarget.id,
     }
     await fetch('/', {
 
@@ -29,18 +31,6 @@ const desinscrireServeur = async (event) => {
     });
     window.location.reload();
 }
-
-let source = new EventSource ('/stream');
-source.addEventListener('inscrire-hike', (event) => {
-    let data = JSON.parse(event.data);
-    console.log(data);
-    window.location.reload();
-});
-source.addEventListener('desinscrire-hike', (event) => {
-    let data = JSON.parse(event.data);
-    console.log(data);
-    window.location.reload();
-});
 
 // Creation de event listener pour le bouton d'inscription/deinscription de chaque cartes hikes
 for (let supButton of cardButtons) {

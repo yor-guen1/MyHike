@@ -66,9 +66,14 @@ const createDatabase = async (connectionPromise) => {
             ('administrateur');
 
         INSERT INTO utilisateur (id_type_utilisateur,nom_utilisateur, courriel, mot_passe, prenom, nom) VALUES 
-            (2, 'kocylabbas', 'kocylabbas@gmail.com', '$2b$10$SRmyYhEapDBQWh73MzW5SuBx6kI3ucT/l2m/5uFBAWpR5JF55AoXq', 'Kocyl', 'Abbas'),
-            (1, 'yorguen', 'yorguen@gmail.com', '$2b$10$oFgYJneF/kQWauQyCQyoLeBzKcNVzOPeKqvNT.rxdoGYFJ3BToxuO', 'Yorguen', 'M'),
-            (2, 'admin', 'admin@admin.com', '$2b$10$4LjO9Jcf0s0cHgPKocIJL.Hd5DxWv4bL4DYWkMjAGjEKov0yTxJd6', 'Admin', 'Admin');
+            (1, 'john_doe', 'john_doe@gmail.com', 'passw0rd', 'John', 'Doe'),
+            (1, 'sera', 'sera@gmail.com', 'passw0rd', 'Seraphina', 'Lopez'),
+            (1, 'arlo_shield', 'arlo_shield@gmail.com', 'passw0rd', 'Arlo', 'Shield'),
+            (1, 'blyke_ray', 'blyke_ray@gmail.com', 'passw0rd', 'Blyke', 'Leclerc'),
+            (1, 'remi_fast', 'remi_fast@gmail.com', 'passw0rd', 'Remi', 'Smith'),
+            (1, 'isen_radar', 'isen_radar@gmail.com', 'passw0rd', 'Isen', 'Turner'),
+            (1, 'elaine_doc', 'elaine_doc@gmail.com', 'passw0rd', 'Elaine', 'Nelson'),
+            (1, 'zeke_the_form', 'zeke_the_form@gmail.com', 'passw0rd', 'Zeke', 'Anderson');
             
         INSERT INTO hike (nom, date_debut, nb_hike, capacite, description) VALUES 
             ('Luskville Falls', 1662508800000, 12, 12, 'This trail offers amazing views of the surrounding area and a few waterfalls. While the waterfalls may not be very active during the dry season. The difficulty level of this trail is largely due to the initial incline which can be intense.'),

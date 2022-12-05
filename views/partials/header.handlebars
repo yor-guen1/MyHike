@@ -23,10 +23,7 @@
             <a class="nav-link" href="MyHikes">My Hikes</a>
           </li>
            {{/if}}
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">Contact</a>
-          </li>
-           {{#unless user}}
+          {{#unless user}}
           <li class="nav-item">
                 <a class="nav-link" href="/connexion">Connexion</a>
           </li>
@@ -38,6 +35,9 @@
               </form>
           </li>
           {{/if}}
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
         </ul>
       </div>
     

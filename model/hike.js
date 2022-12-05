@@ -40,19 +40,14 @@ export const deleteHike= async (id)=>{
         `DELETE FROM  hike WHERE id_hike = ? `,
         [id]
     );
-    await connexion.run(
-        `DELETE FROM   hike_utilisateur WHERE id_hike = ?`,
-        [id]
-    );
+   
     
 }
 // fonction pour recuperer les hikes auquel lutilisateur est inscrit de la base de donnee
-export const getMyHikes = async (id_utilisateur) => {
+export const getMyHikes = async () => {
     let connexion = await promesseConnexion;
 
-    let resultat = await connexion.all('SELECT * FROM hike INNER JOIN hike_utilisateur ON hike.id_hike=hike_utilisateur.id_hike AND id_utilisateur = ? ',
-    [id_utilisateur]
-    );
+    let resultat = await connexion.all('SELECT * FROM hike INNER JOIN hike_utilisateur ON hike.id_hike=hike_utilisateur.id_hike AND id_utilisateur = 1 ');
     for (let i = 0; i < resultat.length; i++) {
         let date=new Date(resultat[i].date_debut);
        
@@ -65,9 +60,8 @@ export const getMyHikes = async (id_utilisateur) => {
 /*inscrire un utilisateur a un hike en lajoutanat a la table hike_utilisateur 
 Mais avant on verifie si on a des places vide pour ce hike
 */ 
-export const inscrireHike =async(id,id_utilisateur)=>{
+export const inscrireHike =async(id)=>{
      let connexion =await promesseConnexion;
-     console.log('hello');
      let Cap=await connexion.run( `SELECT capacite FROM hike WHERE id_hike=?`,[id]);
      let nbHike=await connexion.run( `SELECT nb_hike FROM hike WHERE id_hike=?`,[id]);
 
@@ -78,8 +72,8 @@ export const inscrireHike =async(id,id_utilisateur)=>{
          
      await connexion.run(
          `INSERT INTO  hike_utilisateur (id_hike, id_utilisateur) 
-         VALUES  (?,?)`,
-         [id,id_utilisateur]
+         VALUES  (?,1)`,
+         [id]
      );
      await connexion.run(
         `UPDATE hike
@@ -90,12 +84,12 @@ export const inscrireHike =async(id,id_utilisateur)=>{
      }
  }
  /*desinscrire un utilisateur a un hike en le supprimant a la table hike_utilisateur*/
- export const desinscrireHike= async (id,id_utilisateur)=>{
+ export const desinscrireHike= async (id)=>{
      let connexion = await promesseConnexion;
     
       await connexion.run(
-         `DELETE FROM   hike_utilisateur WHERE id_hike = ? AND  id_utilisateur=?`,
-         [id,id_utilisateur]
+         `DELETE FROM   hike_utilisateur WHERE id_hike = ? `,
+         [id]
      );
      await connexion.run(
         `UPDATE hike
@@ -105,13 +99,12 @@ export const inscrireHike =async(id,id_utilisateur)=>{
     )
 }
 // fonction qui retourne les inscription aux hikes de la base de donnee
-//on retourne la table hike_utilisateur pouir la comparer apres 
-export const getInscription= async (id_utilisateur)=>{
+//on retourne la table hike_utilisateurpouir la comparer apres 
+export const getInscription= async ()=>{
     let connexion = await promesseConnexion;
     
      let resultat=await connexion.all(
-        'SELECT * FROM hike_utilisateur  WHERE id_utilisateur=?',
-        [id_utilisateur]
+        'SELECT * FROM hike_utilisateur'
     );
     return resultat;
 }
