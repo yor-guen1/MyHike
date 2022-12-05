@@ -1,12 +1,10 @@
-import { request } from "express";
-
 let cardButtons = document.querySelectorAll('#liste-card button');
 
 // Fonction qui permet a l'utilisateur de s'inscrir a un hike
 const inscrireServeur = async (event) => {
     event.preventDefault();
     let data = {
-        id: event.currentTarget.id,
+        id: event.currentTarget.id
     }
     await fetch('/', {
 
@@ -32,13 +30,25 @@ const desinscrireServeur = async (event) => {
     window.location.reload();
 }
 
+let source = new EventSource ('/stream');
+source.addEventListener('inscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+  
+    window.location.reload();
+});
+source.addEventListener('desinscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+  
+    window.location.reload();
+});
+
 // Creation de event listener pour le bouton d'inscription/deinscription de chaque cartes hikes
 for (let supButton of cardButtons) {
     // supButton.addEventListener('click', inscrireServeur);
-    if (supButton.innerHTML === 'Inscrire') {
+    if (supButton.innerHTML === 'Subscribe') {
         supButton.addEventListener('click', inscrireServeur);
         supButton.addEventListener('click',()=>{
-        supButton.innerHTML = 'Desinscrire';
+        supButton.innerHTML = 'Unsubscribe';
         supButton.className = 'btn btn-danger btn-lg btn-block';
         
         });
@@ -47,7 +57,7 @@ for (let supButton of cardButtons) {
     } else {
         supButton.addEventListener('click', desinscrireServeur);
         supButton.addEventListener('click',()=>{
-        supButton.innerHTML = 'Inscrire';
+        supButton.innerHTML = 'Subscribe';
         supButton.className = 'btn btn-primary btn-lg btn-block';
        
         });

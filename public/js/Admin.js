@@ -94,10 +94,10 @@ form.addEventListener('submit', validateDescription);
 // Fonction pour la creation dynamique d'une carte hike du cote client
 const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
 
-    if(!form.checkValidity()) {
-        return;
-    }
-    console.log(id)
+    //  if(!form.checkValidity()) {
+    //      return;
+    //  }
+   
     let div = document.createElement('div');
     let div2 = document.createElement('div');
     let div3 = document.createElement('div');
@@ -190,7 +190,7 @@ const addHikeServeur = async (event) => {
 
     if(response.ok) {
         let data = await response.json();
-        addHikeClient(data.id, addDateDebut.value, addNom.value, addCapacite.value, addDescription.value);
+        //addHikeClient(data.id, addDateDebut.value, addNom.value, addCapacite.value, addDescription.value);
         addNom.value='';
         addDateDebut.value='';
         addCapacite.value='';
@@ -227,6 +227,17 @@ const deleteHikeServeur = async (event) => {
 
 }
 
+
+let source = new EventSource ('/stream');
+source.addEventListener('add-hike', (event) => {
+    let data = JSON.parse(event.data);
+  
+    addHikeClient(data.id, data.date_debut, data.nom, data.capacite, data.description);
+});
+source.addEventListener('delete-hike', (event) => {
+    let data = JSON.parse(event.data);
+    deleteHikeClient(data.id);
+});
 // Creation d'un event listener pour les boutons supprimer de tout les cartes hikes qui fait appel a la fonction deleteHikeServer
 for(let supButton of cardButtons )
 {supButton.addEventListener('click', deleteHikeServeur);}

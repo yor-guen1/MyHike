@@ -36,12 +36,12 @@
 
           </div>
           {{#if this.inscription}}
-          <button type="button" class="btn btn-danger btn-lg btn-block" id="{{this.id_hike}}">Desinscrire</button>
+          <button type="button" class="btn btn-danger btn-lg btn-block" id="{{this.id_hike}}">Unsubscribe</button>
           {{else}}{{#if this.checkInscription}}
 
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="{{this.id_hike}}">Inscrire</button>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="{{this.id_hike}}">Subscribe</button>
           {{else}}
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="{{this.id_hike}}" disabled>Complet</button>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="{{this.id_hike}}" disabled>Full</button>
           {{/if}}
           {{/if}}
         </div>

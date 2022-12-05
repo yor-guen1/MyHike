@@ -1,5 +1,5 @@
 <header>
-   
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg  fixed-top">
     <div class="container">
@@ -22,25 +22,37 @@
           <li class="nav-item">
             <a class="nav-link" href="MyHikes">My Hikes</a>
           </li>
-           {{/if}}
-          {{#unless user}}
-          <li class="nav-item">
-                <a class="nav-link" href="/connexion">Connexion</a>
-          </li>
-          {{/unless}}
-          {{#if user}}
-          <li class="nav-item">
-              <form class="nav-form" method="post" action="/deconnexion">
-                <input class="nav-button" type="submit" value="Déconnexion">
-              </form>
-          </li>
           {{/if}}
           <li class="nav-item">
             <a class="nav-link" href="#contact">Contact</a>
           </li>
+          {{#unless user}}
+          <li class="nav-item">
+            <a class="nav-link" href="/connexion">Login</a>
+          </li>
+          {{/unless}}
+          {{#if user}}
+          {{!-- <li class="nav-item">
+            <form class="nav-form" method="post" action="/deconnexion">
+              <input class="nav-button" type="submit" value="Déconnexion">
+            </form>
+          </li> --}}
+
+          <li class="nav-item dropdown">
+            <a href="" class="nav-link" data-toggle="dropdown" aria-expanded="false">{{user.nom_utilisateur}} </a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="nav-item">
+            <form class="nav-form" method="post" action="/deconnexion">
+              <input class="nav-button" type="submit" value="Logout">
+            </form>
+          </li>
+
+            </ul>
+          </li>
+          {{/if}}
         </ul>
       </div>
-    
+
     </div>
   </nav>
 </header>

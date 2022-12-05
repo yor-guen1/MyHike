@@ -40,14 +40,24 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(middlewareSse());
 app.use(urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 
 // Ajouter les routes ici ...
 app.get('/', async (request, response) => {
+    //verifier si l'utilisateur exist pour le donner lacces 
     if (request.user) {
-        let inscrit = await getInscription();
+        //calculer le nombre de visite de l'utilisateur 
+        if(request.session.countHome === undefined) {
+            request.session.countHome = 0;
+        }
+        
+        request.session.countHome++;
+
+
+        let inscrit = await getInscription(request.user.id_utilisateur);
         let hike_ids = [];
 
         let data = [];
@@ -77,12 +87,14 @@ app.get('/', async (request, response) => {
             acceptCookie: request.session.accept,
             user: request.user,
             admin :request.user.id_type_utilisateur == 2,
+            count:request.session.countHome,
             hike: data
         });
     }
     else {
         response.redirect('/connexion')
     }
+  
 });
 
 
@@ -92,8 +104,11 @@ app.post('/', async (request, response) => {
     }
     else {
         // JE VIENS D'AJOUTER SA ET SA MARCHE PAS request.body.id_utilisateur
-    let id = await inscrireHike(request.body.id);
+    let id = await inscrireHike(request.body.id, request.user.id_utilisateur);
     response.status(201).json({ id: id });
+    response.pushJson({
+        id: id,
+    }, 'inscrire-hike');
     }
 });
 app.delete('/', async (request, response) => {
@@ -101,8 +116,11 @@ app.delete('/', async (request, response) => {
         response.status(401).end();
     }
     else {
-    let id = await desinscrireHike(request.body.id);
+    let id = await desinscrireHike(request.body.id, request.user.id_utilisateur);
     response.status(201).json({ id: id });
+    response.pushJson({
+        id: request.body.id,
+    }, 'desinscrire-hike');
     }
 });
 
@@ -114,6 +132,14 @@ app.get('/Admin', async (request, response) => {
         response.status(403).end();
     }
     else {
+        //calculer le nombre de visite de l'utilisateur 
+        if(request.session.countAdmin === undefined) {
+            request.session.countAdmin = 0;
+        }
+        
+        request.session.countAdmin++;
+
+
         response.render('Admin', {
             title: 'Admin',
             styles: ['/css/Admin.css'],
@@ -121,28 +147,46 @@ app.get('/Admin', async (request, response) => {
             scripts: ['/js/Admin.js'],
             acceptCookie: request.session.accept,
             user: request.user,
+            admin :request.user.id_type_utilisateur == 2,
+            count:request.session.countAdmin,
             hike: await getHikes(),
 
         });
     }
 });
 app.get('/connexion', (request, response) => {
+    //calculer le nombre de visite de l'utilisateur 
+    if(request.session.countConnexion === undefined) {
+        request.session.countConnexion = 0;
+    }
+    
+    request.session.countConnexion++;
+
     response.render('Connexion', {
         titre: 'Connexion',
         styles: ['/css/authentification.css', '/css/style.css'],
         scripts: ['/js/connexion.js'],
         acceptCookie: request.session.accept,
         user: request.user,
-        count: request.session.accept
+        count:request.session.countConnexion
+        
     });
 });
 app.get('/inscription', (request, response) => {
+    //calculer le nombre de visite de l'utilisateur 
+    if(request.session.countInscription === undefined) {
+        request.session.countInscription = 0;
+    }
+    
+    request.session.countInscription++;
+
     response.render('Inscription', {
         titre: 'Inscription',
         styles: ['/css/authentification.css', '/css/style.css'],
         scripts: ['/js/inscription.js'],
         user: request.user,
-        acceptCookie: request.session.accept
+        acceptCookie: request.session.accept,
+        count:request.session.countInscription
     });
 });
 app.post('/Admin', async (request, response) => {
@@ -156,10 +200,17 @@ app.post('/Admin', async (request, response) => {
     if (!validateForm(request.body)) {
         let id = await addHike(request.body.nom, request.body.date_debut, request.body.capacite, request.body.description);
         response.status(201).json({ id: id });
+        response.pushJson({
+            id: id,
+            nom: request.body.nom, 
+            date_debut:request.body.date_debut, 
+            capacite:request.body.capacite, 
+            description:request.body.description
+        }, 'add-hike');
     }
 
     else {
-        console.log(request.body);
+        
         response.status(400).end();
     }
     }
@@ -174,11 +225,21 @@ app.delete('/Admin', async (request, response) => {
     else {
 
     await deleteHike(request.body.id);
-    response.status(200).end();
+    response.status(200);
+    response.pushJson({
+        id: request.body.id,
+    }, 'delete-hike');
     }
 });
 app.get('/MyHikes', async (request, response) => {
      if (request.user) {
+        //calculer le nombre de visite de l'utilisateur 
+        if(request.session.CountMyHikes === undefined) {
+            request.session.CountMyHikes = 0;
+        }
+        
+        request.session.CountMyHikes++;
+
     response.render('MyHikes', {
         title: 'Page d\'accueil',
         styles: ['/css/style.css'],
@@ -186,13 +247,24 @@ app.get('/MyHikes', async (request, response) => {
         acceptCookie: request.session.accept,
         user: request.user,
         admin :request.user.id_type_utilisateur == 2,
-        hike: await getMyHikes(),
+        count:request.session.CountMyHikes,
+        hike: await getMyHikes(request.user.id_utilisateur),
 
 
     });
 }
     else {
         response.redirect('/Connexion');
+    }
+});
+
+
+app.get('/stream', (request, response) => {
+    if(request.user) {
+        response.initStream();
+    }
+    else {
+        response.status(401).end();
     }
 });
 
@@ -210,7 +282,7 @@ app.post('/inscription', async (request, response, next) => {
         }
         catch (error) {
             if (error.code === 'SQLITE_CONSTRAINT') {
-                console.log(request.body);
+            
                 response.status(409).end();
             }
             else {

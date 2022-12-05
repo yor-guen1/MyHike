@@ -36,7 +36,7 @@ formAuth.addEventListener('submit', async (event) => {
         window.location.replace('/');
     } 
     else if (response.status === 401) {
-        ///afficher erreur dans linterface graphic et suprimer le console.log
+        
         let info = await response.json();
         if (info.erreur === 'erreur_nom_utilisateur') {
             incorrectUsernameDiv.innerHTML = '';

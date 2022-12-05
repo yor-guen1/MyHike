@@ -24,7 +24,19 @@ const myHikeDesinscrireServeur = async (event) => {
     });
     //window.location.reload();
 }
+let source = new EventSource ('/stream');
 
+source.addEventListener('inscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+ 
+    window.location.reload();
+});
+
+source.addEventListener('desinscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+    
+    deleteHikeClient(data.id);
+});
 // Creation des eventlistener pour les bouttons de chaque carte hike
 for (let supButton of cardButtons) {
     
