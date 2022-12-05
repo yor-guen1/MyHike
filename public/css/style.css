@@ -4,8 +4,6 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-
-
   padding-top: 56px;
 }
 .formlabel{
@@ -21,6 +19,38 @@ body {
   background-color: rgba(238, 239, 238, 0.9);
   padding: 20px;
 }
+.form-conx-Ins{
+  
+  width: 30%;
+
+  opacity: 80%;
+
+  margin:10rem auto 0 auto;
+  border-radius: 5px;
+  color: black;
+  background-color: rgba(238, 239, 238, 0.9);
+  padding: 20px;
+}
+@media only screen and (max-width:1024px) {
+  .form-conx-Ins  {
+    width: 60%;
+ 
+  }
+}
+@media only screen and (max-width:700px) {
+  .form-conx-Ins  {
+    width: 80%;
+ 
+  }
+}
+@media only screen and (max-width:900px) {
+  #form-hike  {
+    max-width: 90%;
+ 
+  }
+}
+
+
 .titel-form{
   text-align: center;
   padding-top: 20px;
@@ -165,6 +195,9 @@ body {
     color:white;
     background-color: rgba(0, 133, 34,0.2);
   }
+  .dropdown-menu {
+    background-color: #00B4CC;
+  }
   /*FORM*/
   form {
     display: block;
@@ -174,6 +207,71 @@ body {
     color: #F9F9F9;
   }
   
+  .popup{
+    
+    background-color: #fff;
+    box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 20px 30px;
+    text-align: center;
+    max-width: 500px;
+  }
+  
+  .popup p {
+    color: #555;
+    
+  }
+  
+  .btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button-accept {
+    background-color: #3498db;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 15px 30px;
+    position: relative;
+    margin: 10px;
+  }
+  
+  .button-accept:active {
+    box-shadow: none;
+    transform: scale(0.98);
+  }
+  
+  .button-accept:focus {
+    outline: none;
+  }
+  
+  .button-accept.ghost {
+    background-color: #fff;
+    color: #3498db;
+    box-shadow: none;
+  }
+  
+  .button-accept.ghost span {
+    background-color: #3498db;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    transform: rotate(10deg);
+  }
+  
+  .popup img {
+    width: 70px;
+  } 
   
   /*FOOTER*/
   
@@ -289,70 +387,7 @@ body {
   .social-network a {
     background-color: #F9F9F9;
   }
-  .popup{
-    background-color: #fff;
-    box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    padding: 20px 30px;
-    text-align: center;
-    max-width: 500px;
-  }
   
-  .popup p {
-    color: #555;
-    
-  }
-  
-  .btn-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .button-accept {
-    background-color: #3498db;
-    border: 0;
-    border-radius: 5px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 15px 30px;
-    position: relative;
-    margin: 10px;
-  }
-  
-  .button-accept:active {
-    box-shadow: none;
-    transform: scale(0.98);
-  }
-  
-  .button-accept:focus {
-    outline: none;
-  }
-  
-  .button-accept.ghost {
-    background-color: #fff;
-    color: #3498db;
-    box-shadow: none;
-  }
-  
-  .button-accept.ghost span {
-    background-color: #3498db;
-    border: 0;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 10px;
-    padding: 3px 7px;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    transform: rotate(10deg);
-  }
-  
-  .popup img {
-    width: 70px;
-  }  
   
   .nav-button {
     background-color: transparent;
