@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css">
+  {{#each styles}}
+  <link rel="stylesheet" href="{{this}}">
+  {{/each}}
+
+  {{#each scripts}}
+  <script type="module" src="{{this}}"></script>
+  {{/each}}
+  <script type="module" src="/js/accept-cookie.js"></script>
+</head>
+
+<body>
+  {{>header}}
+
+  <main>
+    <div class="wrapper">
+      {{#unless acceptCookie}}
+      <div class="popup" id="message-cookie">
+        <img src="https://image.flaticon.com/icons/svg/2078/2078580.svg" alt="">
+        <h2>Heya! This site uses cookies.</h2>
+        <p>Cookies allow the website publisher to do useful things like find out whether the computer (and probably its
+          user) has visited the site before.</p>
+        <div class="btn-container">
+          <button class="button-accept" id="button-accept">Sweet... cookies!</button>
+          <button class="button-accept ghost" id="button-no">
+            No. Not for me!
+            <span>Don't click me</span>
+          </button>
+        </div>
+      </div>
+
+      {{/unless}}
+      <div>
+            Nombre de visite: {{count}}
+        </div>
+      {{{body}}}
+    </div>
+  </main>
+
+  {{>footer}}
+
+  <!-- Bootstrap core JavaScript -->
+  {{!--
+  <script type="module" src="./js/main.js"></script> --}}
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

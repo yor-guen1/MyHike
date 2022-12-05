@@ -1,0 +1,79 @@
+<div id="title">
+  <h1>Available Hikes</h1>
+</div>
+
+
+<div class="col-lg-9" id="liste-card">
+  <div class="row" id="row">
+
+
+    {{#each hike}}
+    <div class="col-lg-4 col-md-6 mb-4" id="{{this.id_hike}}">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title">
+            {{this.nom}}
+
+          </h3>
+
+             
+           
+
+          <h5>{{this.date_debut}}
+
+          </h5>
+
+          <p class="card-text">
+            {{this.description}}
+          </p>
+        </div>
+        <div class="card-footer" id="card-footer">
+          <div class="participants">
+
+            <img src="./img/person.svg" alt="">
+            <h5>{{this.nb_hike}}</h5><h5>/{{this.capacite}}</h5>
+
+          </div>
+          <button class="btn btn-danger btn-lg btn-block" id="{{this.id_hike}}">Supprimer</button>
+        </div>
+      </div>
+
+    </div>
+
+    {{/each}}
+  </div>
+  <!-- /.row -->
+</div>
+<!-- Form -->
+<form id="form-hike" novalidate  >
+
+  <h3 class="titel-form">Add a Hike</h3>
+
+  <label for="form-nom" class="formlabel">Hike Name *</label>
+  <input type="text" placeholder="name" class="form-control" id="form-nom"  required>
+  <div id="error-nom" class="error"></div>
+
+
+  <label for="form-dateDebut" class="formlabel">Hike Date *</label>
+  <input type="datetime-local" class="form-control" id="form-dateDebut" min="2022-11-08T00:00" max="2999-12-12T00:00" required >
+  <div id="error-date" class="error"></div>
+
+  <label for="form-capacite" class="formlabel">Capacity *</label>
+  <input type="number" class="form-control" id="form-capacite" min="1" max="50" required >
+   <div id="error-capacity" class="error"></div>
+
+
+  <label for="form-description" class="formlabel">Description *</label>
+  <textarea class="form-control" id="form-description" rows="3" required minlength="10" maxlength="2000"></textarea>
+    <div id="error-description" class="error"></div>
+
+  <button type="submit" class="btn btn-primary mb-2" id="add-submit" > Ajouter</button>
+
+</form>
+
+<!-- /.form -->
+</div>
+<!-- /.col-lg-9 -->
+
+
+<script type="module" src="./js/Admin.js"></script>

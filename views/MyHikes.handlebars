@@ -1,0 +1,40 @@
+<div id="title">
+  <h1>Go wild for a while</h1>
+</div>
+
+<div class="search">
+  <input type="text" class="searchTerm" placeholder="Search for a hike">
+  <button type="submit" class="searchButton">
+    <i class="fa fa-search"></i>
+ </button>
+</div>
+<div class="col-lg-9" id="liste-card">
+        <div class="row">
+            
+             {{#each hike}}
+          <div class="col-lg-4 col-md-6 mb-4"id="{{this.id_hike}}">
+            <div class="card h-100">
+        
+              <div class="card-body">
+                <h3 class="card-title">{{this.nom}} </h3>
+                <h5>{{this.date_debut}}</h5>
+                <p class="card-text">{{this.description}}</p>
+              </div>
+              <div class="card-footer">
+                 <div class="participants">
+                  <img src="./img/person.svg" alt="">
+                  <h5>{{this.nb_hike}}</h5>/<h5>{{this.capacite}}</h5>
+                 </div>
+                <button type="button" class="btn btn-danger btn-lg btn-block" id="{{this.id_hike}}">Desinscrire</button>
+              </div>
+            </div>  
+          </div>
+          
+          {{/each}}
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+
+
+<script type="module" src="/js/MyHikes.js"></script>
