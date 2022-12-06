@@ -126,10 +126,12 @@ app.delete('/', async (request, response) => {
 
 app.get('/Admin', async (request, response) => {
     if (!request.user) {
-        response.status(401).end();
+        response.status(401);
+        response.redirect('/noacces');
     }
     else if (request.user.id_type_utilisateur != 2) {
-        response.status(403).end();
+        response.status(403);
+        response.redirect('/noacces')
     }
     else {
         //calculer le nombre de visite de l'utilisateur 
@@ -187,6 +189,24 @@ app.get('/inscription', (request, response) => {
         user: request.user,
         acceptCookie: request.session.accept,
         count:request.session.countInscription
+    });
+});
+app.get('/noacces', (request, response) => {
+    //calculer le nombre de visite de l'utilisateur 
+    if(request.session.countConnexion === undefined) {
+        request.session.countConnexion = 0;
+    }
+    
+    request.session.countConnexion++;
+
+    response.render('noacces', {
+        titre: 'No Acces',
+        styles: ['/css/authentification.css', '/css/style.css'],
+        scripts: ['/js/connexion.js'],
+        acceptCookie: request.session.accept,
+        user: request.user,
+        count:request.session.countConnexion
+        
     });
 });
 app.post('/Admin', async (request, response) => {
