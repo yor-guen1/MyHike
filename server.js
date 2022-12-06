@@ -11,7 +11,7 @@ import memorystore from 'memorystore';
 import { getHikes, addHike, deleteHike, getInscription, getMyHikes, inscrireHike, desinscrireHike } from './model/hike.js';
 import cors from 'cors';
 import cspOption from './csp-options.js';
-import { validateForm } from './validations.js';
+import { validateForm ,isIDValide} from './validations.js';
 import passport from 'passport';
 import middlewareSse from './middleware-sse.js';
 import './authentification.js'
@@ -104,11 +104,21 @@ app.post('/', async (request, response) => {
     }
     else {
         // JE VIENS D'AJOUTER SA ET SA MARCHE PAS request.body.id_utilisateur
+         //validation id
+
+         if(isIDValide( parseInt(request.body.id)) &&isIDValide( parseInt(request.user.id_utilisateur)) )
+         {
     let id = await inscrireHike(request.body.id, request.user.id_utilisateur);
     response.status(201).json({ id: id });
     response.pushJson({
         id: id,
     }, 'inscrire-hike');
+    }
+
+    else {
+        response.status(400).end();
+    }
+
     }
 });
 app.delete('/', async (request, response) => {
@@ -116,11 +126,22 @@ app.delete('/', async (request, response) => {
         response.status(401).end();
     }
     else {
-    let id = await desinscrireHike(request.body.id, request.user.id_utilisateur);
-    response.status(201).json({ id: id });
-    response.pushJson({
-        id: request.body.id,
-    }, 'desinscrire-hike');
+        //validation id
+
+        if(isIDValide( parseInt(request.body.id)) &&isIDValide( parseInt(request.user.id_utilisateur)) )
+        {
+     
+          let id = await desinscrireHike(request.body.id, request.user.id_utilisateur);
+          response.status(201).json({ id: id });
+           response.pushJson({
+           id: request.body.id,
+    },    'desinscrire-hike');
+    }
+
+    else {
+        response.status(400).end();
+    }
+
     }
 });
 
@@ -244,12 +265,19 @@ app.delete('/Admin', async (request, response) => {
     }
     else {
 
+        if(isIDValide(request.body.id_cours)){
     await deleteHike(request.body.id);
     response.status(200);
     response.pushJson({
         id: request.body.id,
     }, 'delete-hike');
     }
+
+else {
+    response.status(400).end();
+   }
+    }
+
 });
 app.get('/MyHikes', async (request, response) => {
      if (request.user) {
