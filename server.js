@@ -2,6 +2,8 @@
 import 'dotenv/config';
 
 // Importer les fichiers et librairies
+import https from 'https';
+import {readFile} from 'fs/promises';
 import express, { json, urlencoded } from 'express';
 import expressHandlebars from 'express-handlebars';
 import helmet from 'helmet';
@@ -352,9 +354,22 @@ app.use(function (request, response) {
     // Renvoyer simplement une chaîne de caractère indiquant que la page n'existe pas
     response.status(404).send(request.originalUrl + ' not found.');
 });
-
+//essaye d'utiliser unginX comme inverse
 
 // Démarrage du serveur
+if(process.env.NODE_ENV==='production'){
 app.listen(process.env.PORT);
 console.info(`Serveurs démarré:`);
 console.info(`http://localhost:${process.env.PORT}`);
+}
+else{
+
+//HTTPS
+const credentials ={
+    key: await readFile('./security/localhost.key'),
+    cert:await readFile('./security/localhost.cert')
+};
+https.createServer(credentials, app).listen(process.env.PORT);
+console.info(`Serveurs démarré:`);
+console.info(`https://localhost:${process.env.PORT}`);
+}

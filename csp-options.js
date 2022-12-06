@@ -14,7 +14,8 @@ if(process.env.NODE_ENV === 'development'){
                 scriptSrc: ["'self'",  "'nonce-browser-sync'"],
                 scriptSrcAttr: ["'none'"],
                 styleSrc: ["'self'", "https:", "'unsafe-inline'"],
-                upgradeInsecureRequests: []
+                upgradeInsecureRequests: [],
+                frameSrc:['https://www.google.com']
             }
         }
     }
