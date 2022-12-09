@@ -8,12 +8,15 @@ export const PasswordValid = (password) => {
     return standard.test(password);
 };
 
-export function UserNameValid(username){
-    var usernameR = /^[a-zA-Z0-9]/;
-    return usernameR.test(username);
-  };
+export const UserNameValid=(username)=>{
+    const usernameR = /^[a-zA-Z0-9]/;
+   return usernameR.test(username);
+ };
+
 
 //validation du nom
 export const validateNom = (nom) => {
     return typeof nom === 'string' && !!nom;
 }
+
+

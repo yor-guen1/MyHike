@@ -1,15 +1,20 @@
 <div id="logincontainer">
-    <form id="form-auth" class="form-conx-Ins">
+    <form id="form-auth" class="form-conx-Ins"  novalidate>
 
-        <h3 class="titel-form">Inscription</h3>
+        <h3 class="titel-form">Inscription</h3 >
 
 
         <div class="inputs">
-            <input type="text" class="form-control" placeholder="Last name" id="input-nom"/>
-            <input type="text" class="form-control" placeholder="Name" id="input-prenom"/>
-            <input type="text" class="form-control" placeholder="Username" id="input-nom-utilisateur"/>
-            <input type="email" class="form-control" placeholder="e-mail" id="input-email">
-            <input type="password" class="form-control" placeholder="password" id="input-mot-de-passe"/>
+            <input type="text" class="form-control" placeholder="Last name" id="input-nom"  required>
+            <div id="error-name" class="error"></div>
+            <input type="text" class="form-control" placeholder="Name" id="input-prenom" required/>
+                <div id="error-prenom" class="error"></div>
+            <input type="text" class="form-control" placeholder="Username" id="input-nom-utilisateur" pattern="[a-zA-Z0-9]{4,}" required/>
+                 <div id="error-nom-utilisateur" class="error"></div>
+            <input type="email" class="form-control" placeholder="e-mail" id="input-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                <div id="error-email" class="error"></div>
+            <input type="password" class="form-control" placeholder="password" id="input-mot-de-passe" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  required/>
+             <div id="error-mot-de-passe" class="error"></div>
         </div>
 
         <p class="inscription">I have an account.<a href="/connexion"> Log in.</a></p>
@@ -18,4 +23,3 @@
         </div>
     </form>
 </div>
-
