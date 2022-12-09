@@ -8,17 +8,13 @@
 
 
     {{#each hike}}
-    <div class="col-lg-4 col-md-6 mb-4" id="{{this.id_hike}}">
+    <div class="col-lg-4 col-md-4 mb-2" id="{{this.id_hike}}">
       <div class="card h-100">
         <div class="card-body">
           <h3 class="card-title">
             {{this.nom}}
 
           </h3>
-
-             
-           
-
           <h5>{{this.date_debut}}
 
           </h5>
@@ -27,6 +23,31 @@
             {{this.description}}
           </p>
         </div>
+        <ul id="list">
+          {{#if inscription}}
+          <table class="col-lg-6 col-md-2 mb-1 table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">E-mail</th>
+    </tr>
+  </thead>
+    {{#each inscription}}
+        
+  <tbody>
+    <tr>
+      <th scope="row">{{this.id_utilisateur}}</th>
+      <td>{{this.prenom}}</td>
+      <td>{{this.nom}}</td>
+      <td>{{this.courriel}}</td>
+    {{/each}}
+     </tr>
+  </tbody>
+</table>
+{{/if}}
+</ul>
         <div class="card-footer" id="card-footer">
           <div class="participants">
 

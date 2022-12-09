@@ -2,13 +2,15 @@
 import 'dotenv/config';
 
 // Importer les fichiers et librairies
+import https from 'https';
+import {readFile} from 'fs/promises';
 import express, { json, urlencoded } from 'express';
 import expressHandlebars from 'express-handlebars';
 import helmet from 'helmet';
 import compression from 'compression';
 import session from 'express-session';
 import memorystore from 'memorystore';
-import { getHikes, addHike, deleteHike, getInscription, getMyHikes, inscrireHike, desinscrireHike } from './model/hike.js';
+import { getHikes, addHike, deleteHike, getInscription, getMyHikes, inscrireHike, desinscrireHike, getListeInscris, getNombreInscription } from './model/hike.js';
 import cors from 'cors';
 import cspOption from './csp-options.js';
 import { validateForm } from './validations.js';
@@ -97,7 +99,6 @@ app.get('/', async (request, response) => {
   
 });
 
-
 app.post('/', async (request, response) => {
     if(!request.user) {
         response.status(401).end();
@@ -141,6 +142,21 @@ app.get('/Admin', async (request, response) => {
         
         request.session.countAdmin++;
 
+        let hikes = await getHikes();
+        let data = [];
+        hikes.forEach(async hike => {
+            
+            data.push({
+                id_hike: hike.id_hike,
+                nom: hike.nom,
+                description: hike.description,
+                capacite: hike.capacite,
+                date_debut: hike.date_debut,
+                nb_hike: hike.nb_hike,
+                inscription: await getListeInscris(hike.id_hike),
+
+            });
+        })
 
         response.render('Admin', {
             title: 'Admin',
@@ -151,7 +167,8 @@ app.get('/Admin', async (request, response) => {
             user: request.user,
             admin :request.user.id_type_utilisateur == 2,
             count:request.session.countAdmin,
-            hike: await getHikes(),
+            hike: data,
+            inscription:data.inscription,
 
         });
     }
@@ -352,9 +369,22 @@ app.use(function (request, response) {
     // Renvoyer simplement une chaîne de caractère indiquant que la page n'existe pas
     response.status(404).send(request.originalUrl + ' not found.');
 });
-
+//essaye d'utiliser unginX comme inverse
 
 // Démarrage du serveur
+if(process.env.NODE_ENV==='production'){
 app.listen(process.env.PORT);
 console.info(`Serveurs démarré:`);
 console.info(`http://localhost:${process.env.PORT}`);
+}
+else{
+
+//HTTPS
+const credentials ={
+    key: await readFile('./security/localhost.key'),
+    cert:await readFile('./security/localhost.cert')
+};
+https.createServer(credentials, app).listen(process.env.PORT);
+console.info(`Serveurs démarré:`);
+console.info(`https://localhost:${process.env.PORT}`);
+}

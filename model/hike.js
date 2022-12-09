@@ -115,3 +115,21 @@ export const getInscription= async (id_utilisateur)=>{
     );
     return resultat;
 }
+export const getNombreInscription= async (id_hike)=>{
+    let connexion = await promesseConnexion;
+    
+     let resultat=await connexion.all(
+        'SELECT COUNT (*) FROM hike_utilisateur  WHERE id_hike=?',
+        [id_hike]
+    );
+    return resultat;
+}
+export const getListeInscris= async (id_hike)=>{
+    let connexion = await promesseConnexion;
+    
+     let resultat=await connexion.all(
+        'SELECT  utilisateur.id_utilisateur, utilisateur.nom, utilisateur.prenom, utilisateur.courriel FROM utilisateur INNER JOIN hike_utilisateur ON utilisateur.id_utilisateur = hike_utilisateur.id_utilisateur AND hike_utilisateur.id_hike=?',
+        [id_hike]
+    );
+    return resultat;
+}
