@@ -14,7 +14,27 @@ if(process.env.NODE_ENV === 'development'){
                 scriptSrc: ["'self'",  "'nonce-browser-sync'"],
                 scriptSrcAttr: ["'none'"],
                 styleSrc: ["'self'", "https:", "'unsafe-inline'"],
-                upgradeInsecureRequests: []
+                upgradeInsecureRequests: [],
+                frameSrc:['https://www.google.com']
+            }
+        }
+    }
+}else{
+    options = {
+        contentSecurityPolicy: {
+            directives: { 
+                defaultSrc: ["'self'"],
+                baseUri: ["'self'"],
+                blockAllMixedContent: [],
+                fontSrc: ["'self'", "https:", "data:"],
+                frameAncestors: ["'self'"],
+                imgSrc: ["'self'", "data:"],
+                objectSrc: ["'none'"],
+                scriptSrc: ["'self'",  "'nonce-browser-sync'"],
+                scriptSrcAttr: ["'none'"],
+                styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+                upgradeInsecureRequests: [],
+                frameSrc:['https://www.google.com']
             }
         }
     }

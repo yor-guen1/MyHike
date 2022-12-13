@@ -9,8 +9,21 @@ let addDescription = document.getElementById('form-description');
 let errorDescription = document.getElementById('error-description');
 let form = document.getElementById('form-hike');
 let divRow = document.getElementById('row');
+let liste=document.getElementById('list');
+let trList=document.getElementById('list-tr');
+
 
 let cardButtons = document.querySelectorAll('#liste-card button');
+
+// let listeBtn=document.getElementById('list-btn');
+
+
+// const showliste = () => {
+//     liste.style.display = 'block';
+// }
+
+// listeBtn.addEventListener('click',showliste);
+    
 
 
 //********************validations************ */
@@ -153,6 +166,8 @@ const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
     button1.classList.add('btn-block');
     button1.id = id;
     button1.innerText = "Supprimer";
+    button1.addEventListener('click', deleteHikeServeur);
+
 
     div4.append(div5);
     div4.append(button1);
@@ -226,9 +241,46 @@ const deleteHikeServeur = async (event) => {
     });
 
 }
+const addListeInscription = (id_utilisateur, nom_utilisateur, id_hike) => {
+    let card = document.getElementById(id_hike);
+    let tbody =card.querySelector('tbody');
+    let tr = document.createElement('tr');
+    tr.setAttribute('data-id',id_utilisateur);
+    let th = document.createElement('th');
+    let td1 = document.createElement('td');
+    //let td2 = document.createElement('td');
 
+    th.scope='row'
 
+    th.innerText=id_utilisateur;
+    td1.innerText=nom_utilisateur;
+    //td2.innerText=prenom;
+    tr.append(th);
+    tr.append(td1);
+    //tr.append(td2);
+    tbody.append(tr);
+
+}
+const deleteListeInscription = (id,id_utilisateur) => {
+
+    let card = document.getElementById(id);
+    let tr=card.querySelector('tr[data-id="'+id_utilisateur+'"]');
+
+    
+    tr.remove();
+}
 let source = new EventSource ('/stream');
+source.addEventListener('inscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+    addListeInscription(data.id_utilisateur,data.nom_utilisateur, data.id_hike);
+    
+});
+source.addEventListener('desinscrire-hike', (event) => {
+    let data = JSON.parse(event.data);
+    deleteListeInscription(data.id,data.id_utilisateur);
+    
+});
+
 source.addEventListener('add-hike', (event) => {
     let data = JSON.parse(event.data);
   

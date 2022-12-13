@@ -108,7 +108,9 @@ app.post('/', async (request, response) => {
     let id = await inscrireHike(request.body.id, request.user.id_utilisateur);
     response.status(201).json({ id: id });
     response.pushJson({
-        id: id,
+        id_hike:request.body.id,
+        id_utilisateur: request.user.id_utilisateur,
+            nom_utilisateur: request.user.nom_utilisateur, 
     }, 'inscrire-hike');
     }
 });
@@ -121,6 +123,7 @@ app.delete('/', async (request, response) => {
     response.status(201).json({ id: id });
     response.pushJson({
         id: request.body.id,
+        id_utilisateur:request.user.id_utilisateur
     }, 'desinscrire-hike');
     }
 });
@@ -160,8 +163,7 @@ app.get('/Admin', async (request, response) => {
 
         response.render('Admin', {
             title: 'Admin',
-            styles: ['/css/Admin.css'],
-            styles: ['/css/style.css'],
+            styles: ['/css/Admin.css','/css/style.css'],
             scripts: ['/js/Admin.js'],
             acceptCookie: request.session.accept,
             user: request.user,
@@ -203,7 +205,7 @@ app.get('/inscription', (request, response) => {
         titre: 'Inscription',
         styles: ['/css/authentification.css', '/css/style.css'],
         scripts: ['/js/inscription.js'],
-        user: request.user,
+        user: request.user, 
         acceptCookie: request.session.accept,
         count:request.session.countInscription
     });
