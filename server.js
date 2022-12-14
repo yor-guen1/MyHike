@@ -12,6 +12,7 @@ import { getHikes, addHike, deleteHike, getInscription, getMyHikes, inscrireHike
 import cors from 'cors';
 import cspOption from './csp-options.js';
 import { validateForm ,isIDValide} from './validations.js';
+import { inscriptioValide,ValidateConnexion } from './public/js/validation-inscription.js';
 import passport from 'passport';
 import middlewareSse from './middleware-sse.js';
 import './authentification.js'
@@ -126,6 +127,7 @@ app.delete('/', async (request, response) => {
         response.status(401).end();
     }
     else {
+
         //validation id
 
         if(isIDValide( parseInt(request.body.id)) &&isIDValide( parseInt(request.user.id_utilisateur)) )
@@ -238,6 +240,7 @@ app.post('/Admin', async (request, response) => {
         response.status(403).end();
     }
     else {
+        //validation des donnes saisies par le client
     if (!validateForm(request.body)) {
         let id = await addHike(request.body.nom, request.body.date_debut, request.body.capacite, request.body.description);
         response.status(201).json({ id: id });
@@ -264,7 +267,7 @@ app.delete('/Admin', async (request, response) => {
         response.status(403).end();
     }
     else {
-
+    //validation id
         if(isIDValide(request.body.id_cours)){
     await deleteHike(request.body.id);
     response.status(200);
@@ -321,9 +324,9 @@ app.post('/accept', (request, response) => {
     response.status(200).end();
 });
 app.post('/inscription', async (request, response, next) => {
-    //mettre la validation  des champs venant du client
 
-    if (true) {
+  // validation des entres inscription cote serveur 
+    if (inscriptioValide(request.body))  {
         try {
             await addUtilisateur(request.body.nomUtilisateur, request.body.motDePasse, request.body.courriel, request.body.nom, request.body.prenom);
             response.status(200).end();
@@ -343,7 +346,8 @@ app.post('/inscription', async (request, response, next) => {
 
 });
 app.post('/connexion', (request, response, next) => {
-    if (true) {
+     // validation de la connexion cote serveur 
+    if (ValidateConnexion(request.body)) {
         passport.authenticate('local', (error, utilisateur, info) => {
             if (error) {
                 next(error);

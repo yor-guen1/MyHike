@@ -68,7 +68,8 @@ const createDatabase = async (connectionPromise) => {
         INSERT INTO utilisateur (id_type_utilisateur,nom_utilisateur, courriel, mot_passe, prenom, nom) VALUES 
             (2, 'kocylabbas', 'kocylabbas@gmail.com', '$2b$10$SRmyYhEapDBQWh73MzW5SuBx6kI3ucT/l2m/5uFBAWpR5JF55AoXq', 'Kocyl', 'Abbas'),
             (1, 'yorguen', 'yorguen@gmail.com', '$2b$10$oFgYJneF/kQWauQyCQyoLeBzKcNVzOPeKqvNT.rxdoGYFJ3BToxuO', 'Yorguen', 'M'),
-            (2, 'admin', 'admin@admin.com', '$2b$10$4LjO9Jcf0s0cHgPKocIJL.Hd5DxWv4bL4DYWkMjAGjEKov0yTxJd6', 'Admin', 'Admin');
+            (2, 'admin', 'admin@admin.com', '$2y$10$PrEATC9Qs0y/qdv6AVImreuUcjcEp8jut9VaD.BbGDNJ2D9VhYY.6', 'Admin', 'Admin');
+            (2, 'admin03', 'admin01@gmail.com', '$2y$10$PrEATC9Qs0y/qdv6AVImreuUcjcEp8jut9VaD.BbGDNJ2D9VhYY.6', 'Admin01', 'Admin01');
             
         INSERT INTO hike (nom, date_debut, nb_hike, capacite, description) VALUES 
             ('Luskville Falls', 1662508800000, 12, 12, 'This trail offers amazing views of the surrounding area and a few waterfalls. While the waterfalls may not be very active during the dry season. The difficulty level of this trail is largely due to the initial incline which can be intense.'),
