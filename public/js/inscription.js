@@ -51,7 +51,7 @@ const validateNomUtilisateur = () => {
         erreurinputNomUtilisateur.style.display = 'block';
     }
     else if (inputNomUtilisateur.validity.patternMismatch ){
-        erreurinputNomUtilisateur.innerText = 'Please enter a user name that consists of one or more letters or digits, and is at least 4 characters long .';
+        erreurinputNomUtilisateur.innerText = 'Please enter a user name that consists of one or more letters or digits, and is at least 4 characters long and 10  characters max .';
         erreurinputNomUtilisateur.style.display = 'block';
 
     }
@@ -64,7 +64,7 @@ formAuth.addEventListener('submit', validateNomUtilisateur);
 
 const validateEmail = () => {
     if(inputCourriel.validity.valid) {
-        erreurinputinputNomUtilisateur.style.display = 'none';
+        erreurinputemail.style.display = 'none';
     }
     else if(inputCourriel.validity.valueMissing) {
         erreurinputemail.innerText = 'This field is required';
@@ -78,6 +78,7 @@ const validateEmail = () => {
 }
 
 formAuth.addEventListener('submit', validateEmail);
+
 /*****************validatePasswordd********************* */
 
 const validatePasswordd = () => {
@@ -96,11 +97,13 @@ const validatePasswordd = () => {
 }
 
 formAuth.addEventListener('submit', validatePasswordd);
+/****************************************************** */
 
 formAuth.addEventListener('submit', async (event)=>{
 
     event.preventDefault();
 
+      //validation du form
    if (!formAuth.checkValidity()){
 
     return;
