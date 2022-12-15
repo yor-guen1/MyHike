@@ -7,7 +7,7 @@ let incorrectUsernameDiv = document.getElementById('username-message');
 const MotDePasseInvalide = () => {
     let p = document.createElement('p');
     p.classList.add('incorrect');
-    p.innerText = "The password is incorrect";
+    p.innerText = "Le mot de passe est invalide";
 
     incorrectPasswordDiv.append(p);
 }
@@ -15,7 +15,7 @@ const MotDePasseInvalide = () => {
 const UsernameInvalide = () => {
     let p = document.createElement('p');
     p.classList.add('incorrect');
-    p.innerText = "Username is incorrect";
+    p.innerText = "Le nom d'utilisateur est invalide";
 
     incorrectUsernameDiv.append(p);
 }

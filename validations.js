@@ -14,16 +14,6 @@ const validateCapacity = (capacite) => {
     
 }
 
-/**
- * Retourne une valeur indiquant si le ID en paramètre est valide.
- * @param {*} id Un ID à valider.
- * @returns Une valeur indiquant si le ID en paramètre est valide.
- */
-
-export const isIDValide = (id) => {
-    return typeof id === 'number' && id >= 0;
-}
-
 
 //validation de la date pour que le champ de saisie ne soit pas vide
 const validateDate = (date_debut) => {
