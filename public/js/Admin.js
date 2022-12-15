@@ -9,21 +9,8 @@ let addDescription = document.getElementById('form-description');
 let errorDescription = document.getElementById('error-description');
 let form = document.getElementById('form-hike');
 let divRow = document.getElementById('row');
-let liste=document.getElementById('list');
-let trList=document.getElementById('list-tr');
-
 
 let cardButtons = document.querySelectorAll('#liste-card button');
-
-// let listeBtn=document.getElementById('list-btn');
-
-
-// const showliste = () => {
-//     liste.style.display = 'block';
-// }
-
-// listeBtn.addEventListener('click',showliste);
-    
 
 
 //********************validations************ */
@@ -116,13 +103,6 @@ const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
     let div3 = document.createElement('div');
     let div4 = document.createElement('div');
     let div5 = document.createElement('div');
-    let ul = document.createElement('ul');
-    let table = document.createElement('table');
-    let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
-    let tr = document.createElement('tr');
-    let th1 = document.createElement('th');
-    let th2 = document.createElement('th');
     let h3 = document.createElement('h3');
     let h5 = document.createElement('h5');
     let p = document.createElement('p');
@@ -132,8 +112,8 @@ const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
     let button1 = document.createElement('BUTTON');
 
     div.classList.add('col-lg-4');
-    div.classList.add('col-md-4');
-    div.classList.add('mb-2');
+    div.classList.add('col-md-6');
+    div.classList.add('mb-4');
     div.id = id;
     div2.classList.add('card');
     div2.classList.add('h-100');
@@ -141,21 +121,6 @@ const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
     div4.classList.add('card-footer');
     div4.id = "card-footer";
     div5.classList.add('participants');
-
-    ul.id = "list";
-    ul.classList.add('col-1');
-    ul.classList.add('col-md-1');
-    ul.classList.add('mb-1');
-
-    tbody.id = "list-tbody";
-
-    table.classList.add('table');
-    table.classList.add('table-striped');
-
-    th1.scope = 'col';
-    th1.innerText = "ID";
-    th2.scope = 'col';
-    th2.innerText = "Username";
 
     h3.classList.add('card-title');
     h3.innerText = nom;
@@ -187,22 +152,12 @@ const addHikeClient = (id, dateDebut, nom, Capacite, Description) => {
     button1.classList.add('btn-lg');
     button1.classList.add('btn-block');
     button1.id = id;
-    button1.innerText = "Delete";
-    button1.addEventListener('click', deleteHikeServeur);
-
+    button1.innerText = "Supprimer";
 
     div4.append(div5);
     div4.append(button1);
 
-    tr.append(th1);
-    tr.append(th2);
-    thead.append(tr);
-    table.append(thead);
-    table.append(tbody);
-    ul.append(table);
-
     div2.append(div3);
-    div2.append(ul);
     div2.append(div4);
 
     div.append(div2);
@@ -271,49 +226,9 @@ const deleteHikeServeur = async (event) => {
     });
 
 }
-const addListeInscription = (id_utilisateur, nom_utilisateur, id_hike) => {
-    let card = document.getElementById(id_hike);
-    let tbody =card.querySelector('tbody');
-    let tr = document.createElement('tr');
-    tr.setAttribute('data-id',id_utilisateur);
-    let th = document.createElement('th');
-    let td1 = document.createElement('td');
-    //let td2 = document.createElement('td');
 
-    th.scope = 'row';
-    th.id = "th-id";
 
-    td1.id = "td-prenom";
-
-    th.innerText=id_utilisateur;
-    td1.innerText=nom_utilisateur;
-    //td2.innerText=prenom;
-    tr.append(th);
-    tr.append(td1);
-    //tr.append(td2);
-    tbody.append(tr);
-
-}
-const deleteListeInscription = (id,id_utilisateur) => {
-
-    let card = document.getElementById(id);
-    let tr=card.querySelector('tr[data-id="'+id_utilisateur+'"]');
-
-    
-    tr.remove();
-}
 let source = new EventSource ('/stream');
-source.addEventListener('inscrire-hike', (event) => {
-    let data = JSON.parse(event.data);
-    addListeInscription(data.id_utilisateur,data.nom_utilisateur, data.id_hike);
-    
-});
-source.addEventListener('desinscrire-hike', (event) => {
-    let data = JSON.parse(event.data);
-    deleteListeInscription(data.id,data.id_utilisateur);
-    
-});
-
 source.addEventListener('add-hike', (event) => {
     let data = JSON.parse(event.data);
   

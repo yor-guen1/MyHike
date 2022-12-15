@@ -16,14 +16,12 @@ if(buttonAccept) {
 }
 
 // setting it initially
-if (buttonAccept){
-    btnContainer.style.flexDirection = 'row';
-    buttonNo.addEventListener('mouseover', (e) => {
-        const currentDir = btnContainer.style.flexDirection;
-        if(currentDir === 'row') {
-            btnContainer.style.flexDirection = 'row-reverse';
-        } else {
-            btnContainer.style.flexDirection = 'row';
-        }
-    })
-}
+btnContainer.style.flexDirection = 'row';
+buttonNo.addEventListener('mouseover', (e) => {
+	const currentDir = btnContainer.style.flexDirection;
+	if(currentDir === 'row') {
+		btnContainer.style.flexDirection = 'row-reverse';
+	} else {
+		btnContainer.style.flexDirection = 'row';
+	}
+})

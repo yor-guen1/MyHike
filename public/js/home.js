@@ -4,8 +4,7 @@ let cardButtons = document.querySelectorAll('#liste-card button');
 const inscrireServeur = async (event) => {
     event.preventDefault();
     let data = {
-        id: event.currentTarget.id,
-       
+        id: event.currentTarget.id
     }
     await fetch('/', {
 
