@@ -5,7 +5,7 @@ import { promesseConnexion } from './connexion.js';
 export const getHikes = async () => {
     let connexion = await promesseConnexion;
 
-    let resultat = await connexion.all('SELECT * FROM hike');
+    let resultat = await connexion.all('SELECT * FROM hike ORDER BY date_debut ASC');
     for (let i = 0; i < resultat.length; i++) {
         let date=new Date(resultat[i].date_debut);
        
@@ -112,6 +112,24 @@ export const getInscription= async (id_utilisateur)=>{
      let resultat=await connexion.all(
         'SELECT * FROM hike_utilisateur  WHERE id_utilisateur=?',
         [id_utilisateur]
+    );
+    return resultat;
+}
+export const getNombreInscription= async (id_hike)=>{
+    let connexion = await promesseConnexion;
+    
+     let resultat=await connexion.all(
+        'SELECT COUNT (*) FROM hike_utilisateur  WHERE id_hike=?',
+        [id_hike]
+    );
+    return resultat;
+}
+export const getListeInscris= async (id_hike)=>{
+    let connexion = await promesseConnexion;
+    
+     let resultat=await connexion.all(
+        'SELECT  utilisateur.id_utilisateur, utilisateur.nom_utilisateur FROM utilisateur INNER JOIN hike_utilisateur ON utilisateur.id_utilisateur = hike_utilisateur.id_utilisateur AND hike_utilisateur.id_hike=?',
+        [id_hike]
     );
     return resultat;
 }
