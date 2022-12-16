@@ -347,11 +347,16 @@ app.post('/inscription', async (request, response, next) => {
 });
 app.post('/connexion', (request, response, next) => {
      // validation de la connexion cote serveur 
-    if (ValidateConnexion(request.body)) {
+    
         passport.authenticate('local', (error, utilisateur, info) => {
-            if (error) {
+            if (!ValidateConnexion(request.body)) {
+                response.status(400).json(info);
+              
+            }
+            else if (error) {
                 next(error);
             }
+            
             else if (!utilisateur) {
                 response.status(401).json(info);
             }
@@ -365,9 +370,7 @@ app.post('/connexion', (request, response, next) => {
                 })
             }
         })(request, response, next);
-    } else {
-        response.status(400).end();
-    }
+    
 });
 app.post('/deconnexion', (request, response, next) => {
     request.logOut((error) => {
