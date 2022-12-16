@@ -214,6 +214,7 @@ app.get('/inscription', (request, response) => {
         count:request.session.countInscription
     });
 });
+// rediriger vers une page no access
 app.get('/noacces', (request, response) => {
     //calculer le nombre de visite de l'utilisateur 
     if(request.session.countConnexion === undefined) {

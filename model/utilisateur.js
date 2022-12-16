@@ -1,7 +1,7 @@
 import { promesseConnexion } from "./connexion.js";
 import { hash } from "bcrypt";
 
-
+// fonction qui ajoute les utilisateurs a la base de donnees
 export const addUtilisateur =async (nomUtilisateur, motDePasse,courriel,nom,prenom)=>{
     let connexion = await promesseConnexion;
 
@@ -13,7 +13,7 @@ export const addUtilisateur =async (nomUtilisateur, motDePasse,courriel,nom,pren
     )
 
 }
-
+// fonction qui cherche un utilisateur a partir de son nom
 export const getUtilisateurByNom=async (nomUtilisateur)=>{
     let connexion = await promesseConnexion;
 

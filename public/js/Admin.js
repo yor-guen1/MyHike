@@ -227,7 +227,7 @@ const deleteHikeServeur = async (event) => {
 
 }
 
-
+// des fonctionnes pour synchroniser en temps réel 
 let source = new EventSource ('/stream');
 source.addEventListener('add-hike', (event) => {
     let data = JSON.parse(event.data);
