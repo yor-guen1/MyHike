@@ -4,22 +4,20 @@ let inputMotDepasse = document.getElementById('input-mot-de-passe');
 let incorrectPasswordDiv = document.getElementById('password-message');
 let incorrectUsernameDiv = document.getElementById('username-message');
 
-
-
-
 const MotDePasseInvalide = () => {
-    
-   
-    incorrectPasswordDiv.innerText = "The password is incorrect";
-    incorrectPasswordDiv.style.display = 'block';
+    let p = document.createElement('p');
+    p.classList.add('incorrect');
+    p.innerText = "Le mot de passe est invalide";
+
+    incorrectPasswordDiv.append(p);
 }
-    
 
 const UsernameInvalide = () => {
-  
-    incorrectUsernameDiv.innerText = "Username is incorrect";
-    incorrectUsernameDiv.style.display = 'block';
-    
+    let p = document.createElement('p');
+    p.classList.add('incorrect');
+    p.innerText = "Le nom d'utilisateur est invalide";
+
+    incorrectUsernameDiv.append(p);
 }
 
 formAuth.addEventListener('submit', async (event) => {
@@ -37,7 +35,7 @@ formAuth.addEventListener('submit', async (event) => {
         
         window.location.replace('/');
     } 
-    else if (response.status === 401  ) {
+    else if (response.status === 401) {
         
         let info = await response.json();
         if (info.erreur === 'erreur_nom_utilisateur') {
@@ -51,22 +49,4 @@ formAuth.addEventListener('submit', async (event) => {
             MotDePasseInvalide();
         }
     }
-
-    else if (response.status === 400  ) {
-        
-        let info = await response.json();
-        if (info.erreur === 'erreur_nom_utilisateur') {
-            incorrectUsernameDiv.innerHTML = '';
-            incorrectPasswordDiv.innerHTML = '';
-            UsernameInvalide();
-        }
-        else if (info.erreur === 'erreur_mot_de_passe') {
-            incorrectUsernameDiv.innerHTML = '';
-            incorrectPasswordDiv.innerHTML = '';
-            MotDePasseInvalide();
-        }
-           
-        
-    }
-   
 });
