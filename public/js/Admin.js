@@ -299,7 +299,7 @@ const deleteListeInscription = (id,id_utilisateur) => {
     let card = document.getElementById(id);
     let tr=card.querySelector('tr[data-id="'+id_utilisateur+'"]');
 
-
+}
 let source = new EventSource ('/stream');
 source.addEventListener('inscrire-hike', (event) => {
     let data = JSON.parse(event.data);
