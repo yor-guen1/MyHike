@@ -8,17 +8,13 @@
 
 
     {{#each hike}}
-    <div class="col-lg-4 col-md-6 mb-4" id="{{this.id_hike}}">
+    <div class="col-lg-4 col-md-4 mb-2" id="{{this.id_hike}}">
       <div class="card h-100">
         <div class="card-body">
           <h3 class="card-title">
             {{this.nom}}
 
           </h3>
-
-             
-           
-
           <h5>{{this.date_debut}}
 
           </h5>
@@ -27,11 +23,37 @@
             {{this.description}}
           </p>
         </div>
+        <ul id="list" class="col-1 col-md-1 mb-1 ">
+          {{!-- {{#if inscription}} --}}
+         
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                {{!-- <th scope="col">Last</th> --}}
+                {{!-- <th scope="col">E-mail</th> --}}
+              </tr>
+            </thead>
+            <tbody id="list-tbody">
+            {{#each inscription}}
+              <tr data-id="{{this.id_utilisateur}}">
+                <th scope="row" id="th-id">{{this.id_utilisateur}}</th>
+                <td id="td-prenom">{{this.nom_utilisateur}}</td>
+                {{!-- <td>{{this.courriel}}</td> --}}
+                </tr>
+                {{/each}}
+              
+            </tbody>
+          </table>
+          {{!-- {{/if}} --}}
+        </ul>
         <div class="card-footer" id="card-footer">
           <div class="participants">
 
             <img src="./img/person.svg" alt="">
-            <h5>{{this.nb_hike}}</h5><h5>/{{this.capacite}}</h5>
+            <h5>{{this.nb_hike}}</h5>
+            <h5>/{{this.capacite}}</h5>
 
           </div>
           <button class="btn btn-danger btn-lg btn-block" id="{{this.id_hike}}">Delete</button>
@@ -45,29 +67,30 @@
   <!-- /.row -->
 </div>
 <!-- Form -->
-<form id="form-hike" novalidate  >
+<form id="form-hike" novalidate>
 
   <h3 class="titel-form">Add a Hike</h3>
 
   <label for="form-nom" class="formlabel">Hike Name *</label>
-  <input type="text" placeholder="name" class="form-control" id="form-nom"  required>
+  <input type="text" placeholder="name" class="form-control" id="form-nom" required>
   <div id="error-nom" class="error"></div>
 
 
   <label for="form-dateDebut" class="formlabel">Hike Date *</label>
-  <input type="datetime-local" class="form-control" id="form-dateDebut" min="2022-11-08T00:00" max="2999-12-12T00:00" required >
+  <input type="datetime-local" class="form-control" id="form-dateDebut" min="2022-11-08T00:00" max="2999-12-12T00:00"
+    required>
   <div id="error-date" class="error"></div>
 
   <label for="form-capacite" class="formlabel">Capacity *</label>
-  <input type="number" class="form-control" id="form-capacite" min="1" max="50" required >
-   <div id="error-capacity" class="error"></div>
+  <input type="number" class="form-control" id="form-capacite" min="1" max="50" required>
+  <div id="error-capacity" class="error"></div>
 
 
   <label for="form-description" class="formlabel">Description *</label>
   <textarea class="form-control" id="form-description" rows="3" required minlength="10" maxlength="2000"></textarea>
-    <div id="error-description" class="error"></div>
+  <div id="error-description" class="error"></div>
 
-  <button type="submit" class="btn btn-primary mb-2" id="add-submit" > Add</button>
+  <button type="submit" class="btn btn-primary mb-2" id="add-submit"> Add</button>
 
 </form>
 
